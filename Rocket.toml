@@ -1,0 +1,14 @@
+[release]
+address = "0.0.0.0"
+port = 9000
+workers = 4
+keep_alive = 40
+ident = "Rocket"
+log_level = "normal"
+temp_dir = "/tmp"
+cli_colors = true
+
+[default.limits]
+bytes = "10 MiB"
+"file/jpg" = "10 MiB"
+"file/png" = "10 MiB"

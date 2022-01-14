@@ -4,6 +4,7 @@ extern crate image;
 
 use rocket::data::{Data, ToByteUnit};
 use rocket::http::Header;
+use rocket::response::Response;
 
 mod domino_maker;
 
@@ -19,8 +20,8 @@ impl DominoResp {
     pub fn new(bytes: Vec<u8>, white_count: u32, black_count: u32) -> Self {
         Self {
             inner: bytes,
-            white_count: Header::new("white_count", white_count.to_string()),
-            black_count: Header::new("black_count", black_count.to_string()),
+            white_count: Header::new("X-White-Count", white_count.to_string()),
+            black_count: Header::new("X-Black-Count", black_count.to_string()),
         }
     }
 }
@@ -45,7 +46,16 @@ async fn convert(
     ))
 }
 
+#[options("/convert")]
+fn options_handler<'a>() -> Response<'a> {
+    Response::build()
+        .raw_header("Access-Control-Allow-Origin", "*")
+        .raw_header("Access-Control-Allow-Methods", "OPTIONS, POST")
+        .raw_header("Access-Control-Allow-HEADERS", "Content-Type")
+        .finilize()
+}
+
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![convert])
+    rocket::build().mount("/", routes![convert, options_handler])
 }
