@@ -4,8 +4,8 @@ extern crate image;
 
 use rocket::data::{Data, ToByteUnit};
 use rocket::http::Header;
-use rocket::response::Response;
 
+mod cors;
 mod domino_maker;
 
 #[derive(Responder)]
@@ -47,15 +47,13 @@ async fn convert(
 }
 
 #[options("/convert")]
-fn options_handler<'a>() -> Response<'a> {
-    Response::build()
-        .raw_header("Access-Control-Allow-Origin", "*")
-        .raw_header("Access-Control-Allow-Methods", "OPTIONS, POST")
-        .raw_header("Access-Control-Allow-HEADERS", "Content-Type")
-        .finilize()
+fn options_handler() -> &'static str {
+    ""
 }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![convert, options_handler])
+    rocket::build()
+        .attach(cors::CORS)
+        .mount("/", routes![convert, options_handler])
 }
