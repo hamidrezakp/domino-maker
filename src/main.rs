@@ -20,8 +20,8 @@ impl DominoResp {
     pub fn new(bytes: Vec<u8>, white_count: u32, black_count: u32) -> Self {
         Self {
             inner: bytes,
-            white_count: Header::new("X-White-Count", white_count.to_string()),
-            black_count: Header::new("X-Black-Count", black_count.to_string()),
+            white_count: Header::new("x-white-count", white_count.to_string()),
+            black_count: Header::new("x-black-count", black_count.to_string()),
         }
     }
 }

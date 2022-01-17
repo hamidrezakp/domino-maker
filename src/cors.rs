@@ -17,6 +17,10 @@ impl Fairing for CORS {
         response.set_header(Header::new("Access-Control-Allow-Origin", "*"));
         response.set_header(Header::new("Access-Control-Allow-Methods", "POST, OPTIONS"));
         response.set_header(Header::new("Access-Control-Allow-Headers", "*"));
+        response.set_header(Header::new(
+            "Access-Control-Expose-Headers",
+            "x-white-count, x-black-count",
+        ));
         response.set_header(Header::new("Access-Control-Allow-Credentials", "false"));
     }
 }
