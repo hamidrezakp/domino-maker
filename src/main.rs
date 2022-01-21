@@ -2,8 +2,10 @@
 extern crate rocket;
 extern crate image;
 
-use rocket::data::{Data, ToByteUnit};
-use rocket::http::Header;
+use rocket::{
+    data::{Data, ToByteUnit},
+    http::Header,
+};
 
 mod cors;
 mod domino_maker;
